@@ -1,0 +1,35 @@
+@if (detailsProduct) {
+<section>
+    <h1 class="text-center text-main my-2">Details Product</h1>
+    <div class="row align-items-center ">
+        <div class="col-md-4">
+            <swiper-container style="--swiper-pagination-color: #0aad0a;" class="mySwiper"  pagination="true" pagination-clickable="true"
+                space-between="30"  autoplay-delay="3000" autoplay-disable-on-interaction="false">
+                @for (item of detailsProduct?.images; track $index) {
+                <swiper-slide>
+                    <div><img [src]="item" alt=""></div>
+                </swiper-slide>
+                }
+            </swiper-container>
+        </div>
+        <div class="col-md-8 ">
+            <h2>{{detailsProduct.title}}</h2>
+            <p class="text-muted">{{detailsProduct.description}}</p>
+            <h3 class="h6">{{detailsProduct.category.name}}</h3>
+            <div class="d-flex justify-content-between align-items-center">
+                <span>{{detailsProduct.price}} EGP</span>
+                <div>
+                    @for (num of [1,2,3,4,5].slice(0,detailsProduct.ratingsAverage); track $index) {
+                    <span><i class="fas fa-star rating-color"></i></span>
+                    }
+                    @if(detailsProduct.ratingsAverage%1!==0){
+                    <span><i class="fa-solid fa-star-half-stroke rating-color"></i></span>
+                    }
+                    <span class="text-muted">{{detailsProduct.ratingsAverage}}</span>
+                </div>
+            </div>
+            <button class="btn-main w-100">+Add To Cart</button>
+        </div>
+    </div>
+</section>
+}

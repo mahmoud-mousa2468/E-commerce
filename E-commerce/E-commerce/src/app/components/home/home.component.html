@@ -1,0 +1,129 @@
+
+    <!-- silder using swiper -->
+
+    <!-- <swiper-container   slides-per-view="2" speed="500" loop="true" css-mode="true" navigation="true" pagination="true">
+    <swiper-slide>
+        <div>
+            <img src="./assets/images/blog-img-1.jpeg"  height="504px" width="100%" alt="">
+        </div>
+    </swiper-slide>
+    <swiper-slide>
+        <div>
+            <img src="./assets/images/blog-img-2.jpeg"  height="504px" width="100%" alt="">
+        </div>
+    </swiper-slide>
+    <swiper-slide>
+        <div>
+            <img src="./assets/images/blog-img-1.jpeg"  height="504px" width="100%" alt="">
+        </div>
+    </swiper-slide>
+    <swiper-slide>
+        <div>
+            <img src="./assets/images/blog-img-2.jpeg"  height="504px" width="100%" alt="">
+        </div>
+    </swiper-slide>
+    <swiper-slide>
+        <div>
+            <img src="./assets/images/blog-img-1.jpeg"  height="504px" width="100%" alt="">
+        </div>
+    </swiper-slide>
+    <swiper-slide>
+        <div>
+            <img src="./assets/images/blog-img-2.jpeg"  height="504px" width="100%" alt="">
+        </div>
+    </swiper-slide>
+    ...
+</swiper-container> -->
+
+<!-- Main Slider  -->
+<div class="Main-slider">
+    <div class="row g-0">
+        <div class="col-md-9">
+            <owl-carousel-o [options]="customOptionsMain">
+                <ng-template carouselSlide>
+                    <div>
+                        <img src="./assets/images/blog-img-1.jpeg" height="504px" width="100%" alt="">
+                    </div>
+                </ng-template>
+                <ng-template carouselSlide>
+                    <div>
+                        <img src="./assets/images/blog-img-2.jpeg" height="504px" width="100%" alt="">
+                    </div>
+                </ng-template>
+                <ng-template carouselSlide>
+                    <div>
+                        <img src="./assets/images/blog-img-1.jpeg" height="504px" width="100%" alt="">
+                    </div>
+                </ng-template>
+                <ng-template carouselSlide>
+                    <div>
+                        <img src="./assets/images/blog-img-2.jpeg" height="504px" width="100%" alt="">
+                    </div>
+                </ng-template>
+                <ng-template carouselSlide>
+                    <div>
+                        <img src="./assets/images/blog-img-1.jpeg" height="504px" width="100%" alt="">
+                    </div>
+                </ng-template>
+                <ng-template carouselSlide>
+                    <div>
+                        <img src="./assets/images/blog-img-2.jpeg" height="504px" width="100%" alt="">
+                    </div>
+                </ng-template>
+
+            </owl-carousel-o>
+        </div>
+        <div class="col-md-3">
+            <div>
+                <img src="./assets/images/slider-image-1.jpeg" width="100%" height="252px" alt="">
+                <img src="./assets/images/slider-image-2.jpeg" width="100%" height="252px" alt="">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- All Categories Slider -->
+<div class="allCategories">
+    <owl-carousel-o [options]="customOptionsCat">
+
+        @for (cat of categoryList; track cat._id) {
+        <ng-template carouselSlide>
+            <div class="cr" [routerLink]="['/category-details',cat._id]">
+                <img [src]="cat.image" height="250px" width="w-100" [alt]="cat.name">
+                <h3 class="h6 text-main">{{cat.name}}</h3>
+            </div>
+        </ng-template>
+        }
+    </owl-carousel-o>
+</div>
+<!-- All Products -->
+<section class="products mt-1 mb-4">
+    <h2 class="text-muted">Popular Products</h2>
+    <input type="search" placeholder="search by title" class="my-2 form-control mx-auto w-50" [(ngModel)]="text" >
+    <div class="row g-3">
+        @for (product of productList.slice(0,12)|search:text; track product.id) {
+        <div class="col-md-2">
+            <div class="product p-2">
+                <div [routerLink]="['/details',product._id]">
+                    <img class="w-100 cr" [src]="product.imageCover" [alt]="product.title">
+                <h3 class="small text-main">{{product.category.name|termtext:2}}</h3>
+                <h4 class="h6">{{product.title|termtext:2}}</h4>
+                <div class="d-flex justify-content-between align-items-center">
+                    <span>{{product.price}} EGP</span>
+                    <div>
+                        @for (num of [1,2,3,4,5].slice(0,product.ratingsAverage); track $index) {
+                        <span><i class="fas fa-star rating-color"></i></span>
+                        }
+                        @if(product.ratingsAverage%1!==0){
+                        <span><i class="fa-solid fa-star-half-stroke rating-color"></i></span>
+                        }
+                        <span class="text-muted">{{product.ratingsAverage}}</span>
+                    </div>
+                </div>
+                </div>
+                <button class="btn-main w-100"(click)="addCart(product._id)">Add To Cart</button>
+            </div>
+        </div>
+        }
+    </div>
+</section>

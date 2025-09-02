@@ -1,0 +1,31 @@
+<section class="products">
+    <div class="mb-2 mt-2"><span class="h2 text-main ">{{categoryDetails?.name}}</span></div>
+    <div class="row g-3">
+        @for (product of Products; track product.id) {
+        @if (categoryDetails._id===product.category._id){
+            <div class="col-md-3">
+            <div class="product p-2">
+                <div [routerLink]="['/details',product._id]">
+                    <img class="w-100 cr" [src]="product.imageCover" [alt]="product.title">
+                <h3 class="small text-main">{{product.category.name}}</h3>
+                <h4 class="h6">{{product.title.split(" ",2).join(" ")}}</h4>
+                <div class="d-flex justify-content-between align-items-center">
+                    <span>{{product.price}} EGP</span>
+                    <div>
+                        @for (num of [1,2,3,4,5].slice(0,product.ratingsAverage); track $index) {
+                        <span><i class="fas fa-star rating-color"></i></span>
+                        }
+                        @if(product.ratingsAverage%1!==0){
+                        <span><i class="fa-solid fa-star-half-stroke rating-color"></i></span>
+                        }
+                        <span class="text-muted">{{product.ratingsAverage}}</span>
+                    </div>
+                </div>
+                </div>
+                <button class="btn-main w-100">Add To Cart</button>
+            </div>
+        </div>
+        }
+        }
+    </div>
+</section>
