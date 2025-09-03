@@ -11,6 +11,7 @@ import { TermtextPipe } from '../../core/pipe/termtext.pipe';
 import { SearchPipe } from '../../core/pipe/search.pipe';
 import { FormsModule } from '@angular/forms';
 import { CartService } from '../../core/services/cart.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-home',
@@ -63,10 +64,23 @@ export class HomeComponent implements OnInit, OnDestroy {
   private readonly _ProductsService = inject(ProductsService)
   private readonly _CategoriesService = inject(CategoriesService)
   private readonly _CartService=inject(CartService)
+  private readonly _ToastrService=inject(ToastrService)
   unsubscriptionValue!: Subscription
   productList: Iproduct[] = []
   categoryList: Icategory[] = []
   text:string="";
+  addCart(id:any):void{
+    this.unsubscriptionValue=this._CartService.addProductToCart(id).subscribe({
+      next:(res)=>{
+        console.log(res)
+        if(res.status=="success"){
+    this._ToastrService.success(res.message,'Fresh Cart');
+        }
+      },error:(err)=>{
+        console.log(err)
+      }
+    })
+  }
   ngOnInit(): void {
     this.unsubscriptionValue = this._ProductsService.getAllProduct().subscribe({
       next: (res) => {
@@ -95,15 +109,18 @@ export class HomeComponent implements OnInit, OnDestroy {
     })
 
   }
-  addCart(id:any):void{
-    this.unsubscriptionValue=this._CartService.addProductToCart(id).subscribe({
-      next:(res)=>{
-        console.log(res)
-      },error:(err)=>{
-        console.log(err)
-      }
-    })
-  }
+  // addCart(id:any):void{
+  //   this.unsubscriptionValue=this._CartService.addProductToCart(id).subscribe({
+  //     next:(res)=>{
+  //       console.log(res)
+  //       if(res.status=="success"){
+  //   this._ToastrService.success(res.message,'Fresh Cart');
+  //       }
+  //     },error:(err)=>{
+  //       console.log(err)
+  //     }
+  //   })
+  // }
   ngOnDestroy(): void {
     this.unsubscriptionValue?.unsubscribe();
   }

@@ -3,11 +3,13 @@ import { CartService } from '../../core/services/cart.service';
 import { Subscription } from 'rxjs';
 import { ICart } from '../../core/interfaces/icart';
 import { CurrencyPipe } from '@angular/common';
+import Swal from 'sweetalert2';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [CurrencyPipe],
+  imports: [CurrencyPipe, RouterLink],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.scss',
 })
@@ -68,5 +70,41 @@ export class CartComponent implements OnInit, OnDestroy {
         console.log(err)
       }
     })
+  }
+    sweetAlertRemoveItem(id:any):void{
+Swal.fire({
+        title:'Do you want to save this changes ?',
+        showDenyButton: true,
+        showCancelButton:true,
+        confirmButtonText:'Save',
+        denyButtonText:`Don't Save`
+      }).then((result:{isConfirmed:boolean;isDenied:boolean})=>{
+        if(result.isConfirmed){
+          Swal.fire('Saved!','','success');
+          this.removeItem(id)
+        }else if(result.isDenied){
+          Swal.fire('Changes Are Not Saved','','info')
+        }
+      })
+  }
+  sweetAlertClearCart():void{
+    Swal.fire({
+  title: "Are you sure?",
+  text: "You won't be able to revert this!",
+  icon: "warning",
+  showCancelButton: true,
+  confirmButtonColor: "#3085d6",
+  cancelButtonColor: "#d33",
+  confirmButtonText: "Yes, clear the cart!"
+}).then((result) => {
+  if (result.isConfirmed) {
+    Swal.fire({
+      title: "Deleted!",
+      text: "Your file has been deleted.",
+      icon: "success"
+    });
+    this.clearCart()
+  }
+});
   }
 }

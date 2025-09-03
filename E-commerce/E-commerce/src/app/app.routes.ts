@@ -14,6 +14,8 @@ import { logedGuard } from './core/guards/loged.guard';
 import { DetailsComponent } from './components/details/details.component';
 import { CategoryDetailsComponent } from './components/category-details/category-details.component';
 import { ForgetpasswordComponent } from './components/forgetpassword/forgetpassword.component';
+import { AllordersComponent } from './components/allorders/allorders.component';
+import { OrdersComponent } from './components/orders/orders.component';
 
 export const routes: Routes = [
     {path:'',component:AuthLayoutComponent,canActivate:[logedGuard],children:[
@@ -30,7 +32,9 @@ export const routes: Routes = [
         {path:'cart',component:CartComponent},
         {path:'brands',component:BrandsComponent},
         {path:'details/:id',component:DetailsComponent},
-        {path:'category-details/:id',component:CategoryDetailsComponent}
+        {path:'category-details/:id',component:CategoryDetailsComponent},
+        {path:'allorders',component:AllordersComponent},
+        {path:'orders/:id',component:OrdersComponent},
     ]},
     {path:'**',component:NotfoundComponent}
 ];
